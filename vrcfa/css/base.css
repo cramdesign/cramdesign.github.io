@@ -1,0 +1,436 @@
+/* debug colors 
+------------------------------------------ */
+.debug .row {
+	background-color: lightpink;
+	background-color: rgba(255,0,0,0.05);
+	box-shadow: inset 0 0 0 1px rgba(255,0,0,0.15);
+}
+.debug .item, .debug aside, .debug section {
+	box-shadow: inset 0 0 0 1px rgba(0,255,0,0.15);
+}
+.debug .grid {
+	box-shadow: inset 0 0 0 1px rgba(0,255,0,0.15);
+}
+
+
+
+/* setup
+------------------------------------------ */
+
+/* universal box-sizing */
+*, *:before, *:after {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+/* define and set horizontal bands */
+.row, .wrap {
+	max-width: 1100px;
+	width: 88%;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+.wrap {
+	max-width: 1500px;
+	width: auto;
+	overflow-x: hidden;
+}
+
+.row.wide, .wrap.wide {
+	max-width: none;
+}
+
+/* nested rows should fill container */
+.row .row {
+	width: auto;
+}
+
+/* contain and clear floated elements inside certain elements */
+.row:before, .row:after,
+.grid:before, .grid:after,
+.wrap:before, .wrap:after,
+.clear:before, .clear:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+
+
+/* Simple Resposive Grid 
+-------------------------------------------------------------- */
+
+.grid {
+	margin: 0;
+	position: relative;
+}
+
+.grid .item {
+	padding: 1em 0;
+}
+
+.grid .item figure img {
+	width: 100%;
+}
+
+.grid .item > a {
+	display: block;
+}
+
+@media (min-width:600px) {
+
+	.grid {
+		margin: 0 -2em;
+	}
+
+	.grid .item {
+		width: 50%;
+		padding: 2em;
+		float: left;
+	}
+	
+}/* end @media */
+
+@media (min-width:600px) and (max-width:900px) {
+
+	.grid .item:nth-child(2n+1) {
+		clear: left;
+	}
+	
+}/* end @media */
+
+@media (min-width:900px) {
+
+	.grid.two {
+		margin: 0 -3em;
+	}
+	
+	.grid.two .item {
+		width: 50%;
+		padding: 2em 3em;
+	}
+
+	.grid.three .item {
+		width: 33.333%;
+	}
+	
+	.grid.four .item {
+		width: 25%;
+	}
+	
+	.grid.five .item {
+		width: 20%;
+	}
+	
+	.grid.six .item {
+		width: 16.666%;
+	}
+	
+	.grid.two .item:nth-child(2n+1),
+	.grid.three .item:nth-child(3n+1),
+	.grid.four .item:nth-child(4n+1),
+	.grid.five .item:nth-child(5n+1),
+	.grid.six .item:nth-child(6n+1){
+		clear: left;
+	}
+	
+}/* end @media */
+
+
+
+/* basic menu code 1.1
+-------------------------------------------------------------- */
+.drop.menu, .drop.menu ul, .menu, .menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.drop.menu li, .menu li {
+	margin: 0;
+	display: inline-block;
+	background: transparent;
+	position: relative;
+	text-align: left;
+}
+
+.drop.menu li {
+	font-weight: bold;
+}
+
+.menu li a {
+	text-decoration: none;
+	display: block;
+	padding: 0.75em 1em;
+	white-space: nowrap;
+}
+
+.drop.menu li ul {
+	background: #eee;
+	display: none;
+	position: absolute;
+	left: 0; top: 100%;
+	box-shadow: 0 0 3px rgba(0,0,0,0.1);
+	z-index: 999;
+}
+
+.drop.menu li ul li {
+	display: block;
+	font-weight: normal;
+	transition: background-color 250ms;
+}
+
+.drop.menu li ul li ul {
+	left: 100%; top: 0;
+}
+
+.menu li:hover {
+	background: #ddd;
+	background: rgba(0,0,0,0.1);
+}
+
+.drop.menu li:hover > ul {
+	display: block;
+}
+
+@media (min-width:1100px) {
+
+	.drop.menu li.menu-item-has-children > a:after {
+		content: ' +';
+	}
+
+}/* end @media */
+
+@media (max-width:1100px) {
+
+	.drop.menu {
+		background: #ddd;
+		padding: 1em 6%;
+	}
+	
+	.drop.menu li {
+		overflow: hidden;
+	}
+	
+	.drop.menu li ul {
+		background: none;
+		box-shadow: none;
+		position: static;
+		margin-bottom: 1em;
+	}
+	
+	.drop.menu li ul li a {
+		padding: 0.25em 1em;
+	}
+	
+	.drop.menu li ul li a:before {
+		content: '\2022\00a0';
+	}
+
+	.drop.menu li, .drop.menu li ul {
+		display: block;
+	}
+	
+}/* end @media */
+
+
+
+/* Menu toggles 
+
+nav input, nav label {
+	display: none;
+}
+	
+@media (max-width: 1100px) {
+
+	header nav {
+		font-size: 1.3em;
+	}
+
+	nav label {
+		display: block;
+		padding: 0.75em 0;
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: bold;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+	}
+	
+	nav input:checked ~ label {
+		background-color: rgba(0,0,0,0.4);
+		color: #fff;
+	}
+	
+	nav input:checked ~ label:before {
+		content: "Close ";
+	}
+	
+	nav input:not(:checked) ~ .target {
+		display: none;
+	}
+	
+	nav input:checked ~ .target {
+		display: block;
+	}
+	
+}
+------------------------------------------ */
+
+input.toggle, label.toggle {
+	display: none;
+}
+
+@media (max-width: 1100px) {
+
+	label.toggle {
+		display: block;
+		padding: 0.75em 0;
+		text-align: center;
+		text-transform: uppercase;
+		font-weight: bold;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		user-select: none;
+	}
+	
+	input.toggle:checked ~ label.toggle {
+		background-color: rgba(0,0,0,0.4);
+		color: #fff;
+	}
+	
+	input.toggle:checked ~ label.toggle span {
+		display: none;
+	}
+	
+	input.toggle:checked ~ label.toggle:before {
+		content: "\2716\00a0";
+		font-weight: normal;
+	}
+	
+	.target {
+		display: none;
+	}
+	
+	input.toggle:checked ~ .target {
+		display: block;
+	}
+	
+}
+
+
+
+/* WordPress Gallery 
+------------------------------------------ */
+
+.gallery {
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+}
+
+.gallery:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.gallery-item {
+	margin: 0;
+	float: left;
+	padding: 0.5em;
+}
+
+.gallery-item img {
+	width: 100%;
+	vertical-align: bottom;
+}
+
+.gallery-columns-1 .gallery-item {
+    width: 100%;
+    float: none;
+}
+.gallery-columns-2 .gallery-item {
+    width: 50%
+}
+.gallery-columns-3 .gallery-item {
+    width: 33.3333%
+}
+.gallery-columns-4 .gallery-item {
+    width: 25%
+}
+.gallery-columns-5 .gallery-item {
+    width: 20%
+}
+.gallery-columns-6 .gallery-item {
+    width: 16.6667%
+}
+.gallery-columns-7 .gallery-item {
+    width: 14.2857%
+}
+.gallery-columns-8 .gallery-item {
+    width: 12.5%
+}
+.gallery-columns-9 .gallery-item {
+    width: 11.1111%
+}
+
+.gallery-columns-2 .gallery-item:nth-child(2n+1),
+.gallery-columns-3 .gallery-item:nth-child(3n+1),
+.gallery-columns-4 .gallery-item:nth-child(4n+1),
+.gallery-columns-5 .gallery-item:nth-child(5n+1),
+.gallery-columns-6 .gallery-item:nth-child(6n+1),
+.gallery-columns-7 .gallery-item:nth-child(7n+1),
+.gallery-columns-8 .gallery-item:nth-child(8n+1),
+.gallery-columns-9 .gallery-item:nth-child(9n+1) {
+	clear: left;
+}
+
+
+
+/* WordPress Stuff 
+------------------------------------------ */
+
+.screen-reader-text {
+	display: none;
+}
+
+
+
+/* post navigation
+-------------------------------------------------------------- */
+.postnav {
+	font-size: 0.85em;
+	border-top: 1px solid #ddd;
+	padding: 2em 0;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+.postnav .page-numbers {
+	padding: 0.5em 0.75em;
+	border: 1px solid #ddd;
+}
+
+.postnav .page-numbers + .page-numbers {
+	margin-left: 0.5em;
+}
+
+.postnav .current {
+	border: 1px solid #ccc;
+	background-color: #eee;
+}
+
+.postnav .prev, .postnav .next {
+	border: none;
+	padding: 0.5em 0;
+}
+
+
+
+
+
